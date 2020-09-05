@@ -27,7 +27,7 @@ body {
 }
 
 .raining {
-    animation: rain 5s infinite linear;
+    animation: rain 3s infinite ease-in-out;
 }
 
 @keyframes rain {
@@ -192,6 +192,43 @@ h1 {
     to {
         transform: scale(1);
     }
+}
+
+.timing-functions dd {
+    margin-left: 0;
+    width: 0;
+    height: 20px;
+    transition-property: width;
+    transition-duration: 3s;
+}
+
+.timing-functions:hover dd {
+    width: 100%;
+}
+
+.timing-functions dd:nth-of-type(1) {
+    background-color: powderblue;
+    transition-timing-function: ease;
+}
+
+.timing-functions dd:nth-of-type(2) {
+    background-color: seagreen;
+    transition-timing-function: ease-in;
+}
+
+.timing-functions dd:nth-of-type(3) {
+    background-color: gold;
+    transition-timing-function: ease-out;
+}
+
+.timing-functions dd:nth-of-type(4) {
+    background-color: orangered;
+    transition-timing-function: ease-in-out;
+}
+
+.timing-functions dd:nth-of-type(5) {
+    background-color: palevioletred;
+    transition-timing-function: linear;
 }
 
 .paused {
