@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Animations</title>
     <link rel="stylesheet" href="styles/style.css">
+    <script src="scripts/index.js" defer></script>
 </head>
 
 <body>
@@ -13,7 +14,14 @@
     <a href="https://www.youtube.com/watch?v=zHUpx90NerM">
         CSS3 Animation & Transitions Crash Course by Traverst Media
     </a>
-    <h1>Let's animate stuffs!</h1>
+    <h1 class="pausable">Let's animate stuffs!</h1>
+    <p>
+        In CSS, there are 2 main ways to move things around the page:
+    </p>
+    <ul>
+        <li>Transition Property</li>
+        <li>Animation Property + Keyframes</li>
+    </ul>
     <pre>h1 {
     position: relative;
     text-align: center;
@@ -34,7 +42,7 @@
     100% {background-color: hotpink; top: 0; left: 0;}
 }</pre>
 
-    <div class="centered-circle" id="morphing-circle"></div>
+    <div class="centered-circle pausable" id="morphing-circle"></div>
     <pre>#morphing-circle {
     background-image: linear-gradient(to right, darkcyan, cyan);
     position: relative;
@@ -55,7 +63,7 @@
     75% {border-radius: 50% 50% 50% 0;}
     100% {border-radius: 50% 50% 50% 50%;}
 }</pre>
-    <div class="centered-circle" id="transition-1">Tap and hold</div>
+    <div class="centered-circle" id="transition-1">Hold</div>
     <pre>#transition-1 {
     transition-property: background-color, border-radius, transform;
     transition-duration: 2s, 3s, 4s;
@@ -70,6 +78,118 @@
     <a href="https://www.youtube.com/watch?v=zHUpx90NerM">
         CSS3 Animation & Transitions Crash Course by Traverst Media
     </a>
+    Starting
+    <a href="https://www.youtube.com/watch?v=8kK-cA99SA0">CSS Transitions</a>
+    Syntax for applying transition:
+    <pre id="one-line-transform">.element {
+    /* transition: [property] [duration] [ease] [delay]; */
+
+    #one-line-transform {
+        transition: opacity 1s ease-in 100ms;
+    }
+
+    #one-line-transform:hover {
+        opacity: 0;
+    }    
+}</pre>
+    <p>
+        We declare the transition property on the element that we want to move. Note that every element is not
+        animatable. Things we can animate include:
+    </p>
+    <ul>
+        <li>font-size</li>
+        <li>background-color</li>
+        <li>width</li>
+        <li>left</li>
+    </ul>
+    <p>
+        These things do not cause a repaint, or reflow of the layout. Things we can't animate:
+    </p>
+    <ul>
+        <li>display</li>
+        <li>font-family</li>
+        <li>position</li>
+    </ul>
+    <p>
+        If you animate anything other than translation, scale, rotation and opacity, you are at risk of not hitting
+        60fps mark.
+    </p>
+    <p>
+        Main ways of triggering these transitions are to hover over things and use classes. Remember
+        <code>pointer-events</code>. Its a big one.
+    </p>
+    <div class="centered-circle clickbait">
+        <div>Clickbait!</div>
+    </div>
+    <pre>.clickbait {
+    border: 10px double orange;
+    display: flex;
+    background-color: pink;
+}
+
+.clickbait div {
+    flex: 1;
+    transition: background-color 500ms ease-in, transform 500ms ease-in;
+    pointer-events: none;
+}
+
+.clickbait.clicked div {
+    transform: translate(50px, 50px) rotate(90deg);
+    background-color: darkseagreen;
+}
+
+/* JS */
+const clickbait = document.querySelector('.clickbait');
+clickbait.onclick = () => {
+    clickbait.classList.toggle('clicked');
+};</pre>
+    <p>
+        In order to use the <code>animation</code> property, we need to use something called <code>keyframe</code>.
+        Keyframes don't have any selectors on them, they are not nested inside anything, they are placed at the root of
+        the css file.
+    </p>
+    <div class="one-line-animation pausable">Ease</div>
+    <pre>.one-line-animation {
+    animation: expand-width 4s ease-in alternate;
+}
+
+@keyframes expand-width {
+    from {
+        width: 20%;
+    }
+    to {
+        width: 100%;
+    }
+}</pre>
+    <div class="container-grid"></div>
+    <pre>.container-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 10vw);
+    grid-auto-rows: 10vw;
+    gap: 10px;
+    min-height: 100px;
+}
+
+.emerging-box {
+    animation: emerging-box 1s ease-in infinite alternate;
+}
+
+@keyframes emerging-box {
+    from {transform: scale(0);}
+    to {transform: scale(1);}
+}
+
+/* JS */
+const containerGrid = document.querySelector('.container-grid');
+containerGrid.onclick = () => {
+    const emergingBox = document.createElement('div');
+    emergingBox.style.backgroundColor = `rgb(${getRandom(0, 256)}, ${getRandom(0, 256)}, ${getRandom(0, 256)})`;
+    emergingBox.classList.add('emerging-box');
+    emergingBox.classList.add('pausable');
+    containerGrid.appendChild(emergingBox);
+}</pre>
+    End of
+    <a href="https://www.youtube.com/watch?v=8kK-cA99SA0">CSS Transitions</a>
 </body>
 
 </html>
