@@ -32,7 +32,7 @@
 
 @keyframes rain {
     to {
-        top: 100vh;
+        transform: translate(0, 100vh);
     }
 }
 
@@ -76,13 +76,27 @@ for (let i = 0; i &lt;= 30; i++) {
 }
 
 @keyframes main-header {
-    0% {background-color: hotpink; top: 0; left: 0;}
-    25% {background-color: thistle; top: 0; left: 50%;}
-    50% {background-color: lime; top: 10vh; left: 50%;}
-    75% {background-color: cyan; top: 10vh; left: 0;}
-    100% {background-color: hotpink; top: 0; left: 0;}
+    0% {
+        background-color: hotpink;
+        transform: translate(0, 0);
+    }
+    25% {
+        background-color: thistle;
+        transform: translate(50%, 0);
+    }
+    50% {
+        background-color: lime;
+        transform: translate(50%, 10vh);
+    }
+    75% {
+        background-color: cyan;
+        transform: translate(0, 10vh);
+    }
+    100% {
+        background-color: hotpink;
+        transform: translate(0, 0);
+    }
 }</pre>
-
     <div class="centered-circle pausable" id="morphing-circle"></div>
     <pre>#morphing-circle {
     background-image: linear-gradient(to right, darkcyan, cyan);
@@ -192,15 +206,17 @@ clickbait.onclick = () => {
     </p>
     <div class="one-line-animation pausable">Ease</div>
     <pre>.one-line-animation {
-    animation: expand-width 4s ease-in alternate;
+    animation: expand-width 4s ease-in infinite alternate;
+    transform-origin: 0 0;
+    background-color: plum;
 }
 
 @keyframes expand-width {
     from {
-        width: 20%;
+        transform: scaleX(0);
     }
     to {
-        width: 100%;
+        transform: scaleX(1);
     }
 }</pre>
     <div class="container-grid"></div>
@@ -250,9 +266,40 @@ containerGrid.onclick = () => {
             <dd></dd>
         </dl>
     </div>
-    
     End of
     <a href="https://www.youtube.com/watch?v=Nloq6uzF8RQ">Animating with CSS transitions</a>
+    <hr>
+    Starting
+    <a href="https://developers.google.com/web/fundamentals/design-and-ux/animations/css-vs-javascript">
+        CSS animations vs JS animations
+    </a>
+    <br>
+    <p>
+        Some properties are more expensive to change than others, and are therefore more likely to make things stutter.
+        So, for example, changing the box-shadow of an element requires a much more expensive paint operation than
+        changing, say, its text color. Similarly, changing the width of an element is likely to be more expensive than
+        changing its transform. if you want the TL;DR, stick to transforms and opacity changes, and use will-change.
+    </p>
+    <ul>
+        <li>
+            CSS transitions and animations are ideal for bringing a navigation menu in from the side, or showing a
+            tooltip. You may end up using JavaScript to control the states, but the animations themselves will be in
+            your CSS.
+        </li>
+        <li>
+            Use JavaScript when you need significant control over your animations. The Web Animations API is the
+            standards-based approach, available today in most modern browsers. This provides real objects, ideal for
+            complex object-oriented applications. JavaScript is also useful when you need to stop, pause, slow down, or
+            reverse your animations.
+        </li>
+        <li>
+            Use requestAnimationFrame directly when you want to orchestrate an entire scene by hand.
+        </li>
+    </ul>
+    End of
+    <a href="https://developers.google.com/web/fundamentals/design-and-ux/animations/css-vs-javascript">
+        CSS animations vs JS animations
+    </a>
     <hr>
 </body>
 

@@ -5,6 +5,19 @@
 
 html {
     font-size: 10px;
+    background-image: linear-gradient(to right, white, lightyellow, gold);
+    background-size: 800%;
+    background-position: top left;
+    animation: bg-animation 5s infinite alternate;
+}
+
+@keyframes bg-animation {
+    from {
+        background-position: top left;
+    }
+    to {
+        background-position: bottom right;
+    }
 }
 
 body {
@@ -32,7 +45,7 @@ body {
 
 @keyframes rain {
     to {
-        top: 100vh;
+        transform: translate(0, 100vh);
     }
 }
 
@@ -56,28 +69,23 @@ h1 {
 @keyframes main-header {
     0% {
         background-color: hotpink;
-        top: 0;
-        left: 0;
+        transform: translate(0, 0);
     }
     25% {
         background-color: thistle;
-        top: 0;
-        left: 50%;
+        transform: translate(50%, 0);
     }
     50% {
         background-color: lime;
-        top: 10vh;
-        left: 50%;
+        transform: translate(50%, 10vh);
     }
     75% {
         background-color: cyan;
-        top: 10vh;
-        left: 0;
+        transform: translate(0, 10vh);
     }
     100% {
         background-color: hotpink;
-        top: 0;
-        left: 0;
+        transform: translate(0, 0);
     }
 }
 
@@ -161,15 +169,16 @@ h1 {
 
 .one-line-animation {
     animation: expand-width 4s ease-in infinite alternate;
+    transform-origin: 0 0;
     background-color: plum;
 }
 
 @keyframes expand-width {
     from {
-        width: 20%;
+        transform: scaleX(0);
     }
     to {
-        width: 100%;
+        transform: scaleX(1);
     }
 }
 
