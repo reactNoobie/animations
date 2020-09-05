@@ -1,4 +1,18 @@
 const render = () => {
+    const toggleRainButton = document.querySelector('#toggle-rain-btn');
+    toggleRainButton.onclick = () => {
+        const rains = document.querySelectorAll('.rain');
+        rains.forEach(rain => rain.classList.toggle('raining'));
+    }
+
+    const rainContainer = document.querySelector('.rain-container');
+    for (let i = 0; i < 50; i++) {
+        const rain = document.createElement('div');
+        rain.classList.add('rain');
+        rain.style.top = `${getRandom(0, 200)}px`;
+        rainContainer.appendChild(rain);
+    }
+
     const pausables = document.querySelectorAll('.pausable');
     pausables.forEach(pausable => {
         pausable.onclick = (e) => {
