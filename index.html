@@ -7,6 +7,7 @@
     <title>Animations</title>
     <link rel="stylesheet" href="styles/style.css">
     <script src="scripts/index.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
 </head>
 
 <body>
@@ -303,6 +304,209 @@ containerGrid.onclick = () => {
         would set about drawing all the individual frames in between the keyframes. We have a similar process today with
         CSS animations, where we instruct the browser what values CSS properties need to have at given points, and it
         fills in the gaps.
+    </p>
+    <p>
+        Creating animations with JavaScript is, by comparison, more complex than writing CSS transitions or animations,
+        but it typically provides developers significantly more power. You can use the Web Animations API to either
+        animate specific CSS properties or build composable effect objects.
+    </p>
+    <p>
+        JavaScript animations are imperative, as you write them inline as part of your code. You can also encapsulate
+        them inside other objects.
+    </p>
+    <div class="js-animation"></div>
+    <button class="js-animation-btn">Animate</button>
+    <pre>const animateJsAnimation = () => {
+    const jsAnimation = document.querySelector('.js-animation');
+    jsAnimation.animate([{ backgroundColor: 'turquoise' }, { backgroundColor: 'teal' }], 3000);
+};
+
+const animateJsAnimationButton = document.querySelector('.js-animation-btn');
+animateJsAnimationButton.onclick = animateJsAnimation;</pre>
+    <p>
+        By default, Web Animations only modify the presentation of an element. If you'd like to have your object remain
+        at the location it has moved to, then you should modify its underlying styles when the animation has finished.
+    </p>
+    <p>
+        With JavaScript animations, you're in total control of an element's styles at every step. This means you can
+        slow down animations, pause them, stop them, reverse them, and manipulate elements as you see fit. This is
+        especially useful if you're building complex, object-oriented applications, because you can properly encapsulate
+        your behavior.
+    </p>
+    <p>
+        Easing makes your animations feel more natural. Choose ease-out animations for UI elements. Avoid ease-in or
+        ease-in-out animations unless you can keep them short; they tend to feel sluggish to end users.
+    </p>
+    <p>
+        With linear motion, things tend to feel robotic and unnatural, and this is something that users find jarring.
+        Generally speaking, you should avoid linear motion.
+    </p>
+    <p>
+        Sometimes you need even more control than a cubic Bézier curve can provide. If you wanted an elastic bounce
+        feel, you might consider using a JavaScript framework, because this is a difficult effect to achieve with either
+        CSS or Web Animations. One powerful framework is GreenSock’s TweenMax (or TweenLite if you want to keep things
+        really lightweight), because you get a lot of control from it in a small JavaScript library, and it’s a very
+        mature codebase.
+    </p>
+    <div class="tweenmax-example"></div>
+    <button class="tweenmax-example-btn">Animate with TweenMax</button>
+    <pre>[script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"][/script]
+
+const animateTweenMaxExample = () => {
+    const tweenMaxExample = document.querySelector('.tweenmax-example');
+    TweenMax.to(
+        tweenMaxExample,
+        2,
+        {
+            y: '100%',
+            ease: 'Elastic.easeOut',
+            repeat: 1,
+            yoyo: true,
+        },
+    );
+};</pre>
+    <p>
+        Ensure that any animating element has will-change set for anything you plan to change well ahead of the
+        animation starting. For view transitions, it’s highly likely you will want to use will-change: transform.
+    </p>
+    <div class="slide-in-example">
+        <ul class="item-list">
+            <li class="item-name">Item 1</li>
+            <li class="item-name">Item 2</li>
+            <li class="item-name">Item 3</li>
+        </ul>
+        <div class="item-description">Item 1 description</div>
+        <div class="item-description">Item 2 description</div>
+        <div class="item-description">Item 3 description</div>
+    </div>
+    <pre>.slide-in-example {
+    position: relative;
+    height: 100px;
+    overflow: hidden;
+}
+
+.item-list, .item-description {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    transition: transform 3s ease-out;
+}
+
+.item-description {
+    transform: translateX(100%);
+}
+
+/* JS */
+const itemNames = document.querySelectorAll('.item-name');
+itemNames.forEach((itemName, index) => {
+    itemName.onclick = () => {
+        document.querySelector('.item-list').style.transform = 'translateX(-100%)';
+        document.querySelector(`.item-description:nth-of-type(${index + 1})`).style.transform = 'translateX(0)';
+    }
+});
+
+const itemDescriptions = document.querySelectorAll('.item-description');
+itemDescriptions.forEach(itemDescription => {
+    itemDescription.onclick = () => {
+        itemDescription.style.transform = 'translateX(100%)';
+        document.querySelector('.item-list').style.transform = 'translateX(0)';
+    }
+});</pre>
+    <div class="carousel-container">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="carousel-controls">
+        <button class="slide-left-btn">&lt;</button>
+        <button class="slide-right-btn">&gt;</button>
+    </div>
+    <pre>.carousel-container {
+    height: 100px;
+    display: flex;
+    overflow: hidden;
+}
+
+.carousel-container>div {
+    flex: 1;
+    min-width: 100%;
+    transition: transform 2s ease-out;
+}
+
+.carousel-container>div:nth-of-type(1) {
+    background-color: lime;
+}
+
+...
+
+/* JS */
+const CAROUSEL_ITEM_COUNT = 5;
+const updateCarouselControlButtons = () => {
+    slideLeftButton.disabled = carouselIndex === 0;
+    slideRightButton.disabled = carouselIndex === CAROUSEL_ITEM_COUNT - 1;
+};
+
+const carouselItems = document.querySelectorAll('.carousel-container>div');
+const slide = slideTo => {
+    if (slideTo === 'right') carouselIndex++;
+    else carouselIndex--;
+    updateCarouselControlButtons();
+    carouselItems.forEach(item => item.style.transform = `translateX(calc(-100% * ${carouselIndex}))`);
+};
+
+let carouselIndex = 0;
+const slideLeftButton = document.querySelector('.slide-left-btn');
+slideLeftButton.onclick = slide.bind(null, 'left');
+const slideRightButton = document.querySelector('.slide-right-btn');
+slideRightButton.onclick = slide.bind(null, 'right');</pre>
+    <div class="modal-container">
+        <div class="modal-content">
+            Haha!
+            <button class="dismiss-modal">Dismiss</button>
+        </div>
+    </div>
+    <button class="show-modal-btn">Show Modal</button>
+    <pre>.modal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(239, 239, 239, 0.741);
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(1.1);
+    transition: transform 100ms ease-in, opacity 100ms ease-in;
+}
+
+.modal-content {
+    padding: 10rem;
+    background-color: white;
+    color: black;
+}
+
+.modal-container.shown {
+    pointer-events: auto;
+    opacity: 1.0;
+    transform: scale(1.0);
+    transition: transform 200ms ease-in, opacity 200ms ease-in;
+}    
+
+/* JS */
+document.querySelector('.show-modal-btn').onclick = () => {
+    document.querySelector('.modal-container').classList.add('shown');
+};
+
+document.querySelector('.dismiss-modal').onclick = () => {
+    document.querySelector('.modal-container').classList.remove('shown');
+};</pre>
+    <p>
+        Note that the different transition values let us make the modal appear slower but go faster. Woahwoahwoah!
     </p>
     End of
     <a href="https://developers.google.com/web/fundamentals/design-and-ux/animations/css-vs-javascript">

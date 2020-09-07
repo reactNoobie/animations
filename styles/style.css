@@ -1,10 +1,13 @@
 * {
     box-sizing: border-box;
+    /* margin: 0; */
     border: 2px solid black;
+    /* padding: 0; */
 }
 
 html {
     font-size: 10px;
+    font-family: monospace;
     background-image: linear-gradient(to right, white, lightyellow, gold);
     background-size: 800%;
     background-position: top left;
@@ -242,4 +245,102 @@ h1 {
 
 .paused {
     animation-play-state: paused;
+}
+
+.js-animation {
+    height: 100px;
+}
+
+.tweenmax-example {
+    height: 100px;
+    background-color: lightskyblue;
+}
+
+.slide-in-example {
+    position: relative;
+    height: 100px;
+    overflow: hidden;
+}
+
+ul, li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.item-list, .item-description {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    transition: transform 2s ease-out;
+}
+
+.item-description {
+    transform: translateX(100%);
+}
+
+.carousel-container {
+    height: 100px;
+    display: flex;
+    overflow: hidden;
+}
+
+.carousel-container>div {
+    flex: 1;
+    min-width: 100%;
+    transition: transform 2s ease-out;
+}
+
+.carousel-container>div:nth-of-type(1) {
+    background-color: lime;
+}
+
+.carousel-container>div:nth-of-type(2) {
+    background-color: palevioletred;
+}
+
+.carousel-container>div:nth-of-type(3) {
+    background-color: paleturquoise;
+}
+
+.carousel-container>div:nth-of-type(4) {
+    background-color: plum;
+}
+
+.carousel-container>div:nth-of-type(5) {
+    background-color: tomato;
+}
+
+.carousel-controls {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.modal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(239, 239, 239, 0.741);
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(1.1);
+    transition: transform 100ms ease-in, opacity 100ms ease-in;
+}
+
+.modal-content {
+    padding: 10rem;
+    background-color: white;
+    color: black;
+}
+
+.modal-container.shown {
+    pointer-events: auto;
+    opacity: 1.0;
+    transform: scale(1.0);
+    transition: transform 200ms ease-in, opacity 200ms ease-in;
 }
