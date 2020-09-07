@@ -9,7 +9,6 @@ const render = () => {
     for (let i = 0; i < 50; i++) {
         const rain = document.createElement('div');
         rain.classList.add('rain');
-        rain.style.top = `${getRandom(0, 200)}px`;
         rainContainer.appendChild(rain);
     }
 
