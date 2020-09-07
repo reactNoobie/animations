@@ -55,7 +55,7 @@ pre {
 h1 {
     position: relative;
     text-align: center;
-    max-width: 50%;
+    width: 50%;
     animation-name: main-header;
     animation-duration: 5s;
     animation-iteration-count: infinite;
@@ -71,11 +71,11 @@ h1 {
     }
     25% {
         background-color: thistle;
-        transform: translate(50%, 0);
+        transform: translate(100%, 0);
     }
     50% {
         background-color: lime;
-        transform: translate(50%, 10vh);
+        transform: translate(100%, 10vh);
     }
     75% {
         background-color: cyan;

@@ -63,7 +63,7 @@ for (let i = 0; i &lt;= 30; i++) {
     <pre>h1 {
     position: relative;
     text-align: center;
-    max-width: 50%;
+    width: 50%;
     animation-name: main-header;
     animation-duration: 5s;
     animation-iteration-count: infinite;
@@ -79,11 +79,11 @@ for (let i = 0; i &lt;= 30; i++) {
     }
     25% {
         background-color: thistle;
-        transform: translate(50%, 0);
+        transform: translate(100%, 0);
     }
     50% {
         background-color: lime;
-        transform: translate(50%, 10vh);
+        transform: translate(100%, 10vh);
     }
     75% {
         background-color: cyan;
@@ -293,6 +293,17 @@ containerGrid.onclick = () => {
             Use requestAnimationFrame directly when you want to orchestrate an entire scene by hand.
         </li>
     </ul>
+    <p>
+        Animating with CSS is the simplest way to get something moving on screen. This approach is described as
+        declarative, because you specify what you'd like to happen.
+    </p>
+    <p>
+        Keyframes are an old term from hand-drawn animations. Animators would create specific frames for a piece of
+        action, called key frames, which would capture things like the most extreme part of some motion, and then they
+        would set about drawing all the individual frames in between the keyframes. We have a similar process today with
+        CSS animations, where we instruct the browser what values CSS properties need to have at given points, and it
+        fills in the gaps.
+    </p>
     End of
     <a href="https://developers.google.com/web/fundamentals/design-and-ux/animations/css-vs-javascript">
         CSS animations vs JS animations
